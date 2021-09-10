@@ -15,11 +15,12 @@ import {
   onScrollEndDrag,
   Platform,
   PermissionsAndroid,
+  Image,
 
 } from 'react-native';
 
 import BottomSheet from 'react-native-simple-bottom-sheet';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Styled from 'styled-components/native';
 import Geolocation from 'react-native-geolocation-service';
 
@@ -37,7 +38,21 @@ async function requestPermission() {
 
 
 const App = () => {
-  const [location, setLocation] = useState(); useEffect(() => { requestPermission().then(result => { console.log({ result }); if (result === "granted") { Geolocation.getCurrentPosition(pos => { setLocation(pos.coords); }, error => { console.log(error); }, { enableHighAccuracy: true, timeout: 3600, maximumAge: 3600, },); } }); }, []);
+  const [location, setLocation] = useState();
+  useEffect(() => {
+    requestPermission()
+      .then(result => {
+        console.log({ result });
+        if (result === "granted") {
+          Geolocation.getCurrentPosition(
+            pos => { setLocation(pos.coords); },
+            error => { console.log(error); },
+            { enableHighAccuracy: true, timeout: 3600, maximumAge: 3600, }
+        ,);
+        }
+      });
+  },
+    []);
 
   if (!location) {
     return (
@@ -50,7 +65,24 @@ const App = () => {
   return (
     <View style={{ flex: 1 }}>
       <Container>
-        <MapView style={{ flex: 1 }} provider={PROVIDER_GOOGLE} initialRegion={{ latitude: location.latitude, longitude: location.longitude, latitudeDelta: 0.005, longitudeDelta: 0.005, }}></MapView>
+        <MapView
+          style={{ flex: 1 }}
+          provider={PROVIDER_GOOGLE}
+          initialRegion={{
+            latitude: location.latitude,
+            longitude: location.longitude,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
+          }}>
+          <Marker
+            key={1}
+            coordinate={{ latitude: location.latitude, longitude: location.longitude }}
+            image={require('./asset/icon-p00.png')}
+          >
+            {/* <Image source={require('./asset/icon-p00.png')} style={{ height: 50, width: 35 }} /> */}
+          </Marker>
+
+        </MapView>
       </Container>
 
 
