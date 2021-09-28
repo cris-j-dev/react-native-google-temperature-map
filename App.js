@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -20,84 +20,22 @@ import {
 } from 'react-native';
 
 import BottomSheet from 'react-native-simple-bottom-sheet';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+// import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Styled from 'styled-components/native';
 import Geolocation from 'react-native-geolocation-service';
-
-const Container = Styled.View`
-    flex: 1;
-`;
-
-
-async function requestPermission() {
-  try {
-    if (Platform.OS === "ios") { return await Geolocation.requestAuthorization("always"); } // 안드로이드 위치 정보 수집 권한 요청 
-    if (Platform.OS === "android") { return await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,); }
-  } catch (e) { console.log(e); }
-}
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import TemperatureTable from './TemperatureTable';
+import DrawMap from './DrawMap';
+import data from './data.json';
 
 
 const App = () => {
-  const [location, setLocation] = useState();
-  useEffect(() => {
-    requestPermission()
-      .then(result => {
-        console.log({ result });
-        if (result === "granted") {
-          Geolocation.getCurrentPosition(
-            pos => { setLocation(pos.coords); },
-            error => { console.log(error); },
-            { enableHighAccuracy: true, timeout: 3600, maximumAge: 3600, }
-        ,);
-        }
-      });
-  },
-    []);
-
-  if (!location) {
-    return (
-      <View>
-        <Text>Splash screen</Text>
-      </View>
-    );
-  }
 
   return (
     <View style={{ flex: 1 }}>
-      <Container>
-        <MapView
-          style={{ flex: 1 }}
-          provider={PROVIDER_GOOGLE}
-          initialRegion={{
-            latitude: location.latitude,
-            longitude: location.longitude,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005,
-          }}>
-          <Marker
-            key={1}
-            coordinate={{ latitude: location.latitude, longitude: location.longitude }}
-            image={require('./asset/icon-p00.png')}
-          >
-            {/* <Image source={require('./asset/icon-p00.png')} style={{ height: 50, width: 35 }} /> */}
-          </Marker>
-
-        </MapView>
-      </Container>
-
-
-      <BottomSheet isOpen>
-        {(onScrollEndDrag) => (
-          <ScrollView onScrollEndDrag={onScrollEndDrag}>
-            {[...Array(10)].map((_, index) => (
-              <View key={`${index}`} style={styles.listItem}>
-                <Text>{`List Item ${index + 1}`}</Text>
-              </View>
-            ))}
-          </ScrollView>
-        )}
-      </BottomSheet>
-    </View>
+      <DrawMap />
+      <TemperatureTable data={data} />
+    </View >
   );
 };
 
@@ -107,6 +45,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
+  },
+  BottomView: {
+    marginBottom: 10
+  },
+  HeadStyle: {
+    height: 50,
+    alignContent: "center",
+    backgroundColor: '#ffe0f0'
+  },
+  TextStyle: {
+    textAlign: "center",
+    backgroundColor: "#f0f0f0",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10
+
+  },
+  TableStyle: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20
   }
 });
 
