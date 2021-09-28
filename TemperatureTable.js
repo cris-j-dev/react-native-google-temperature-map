@@ -13,11 +13,10 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 const TemperatureTable = (props) => {
   console.log(props);
   console.log(props.data.Data);
+  console.log(Object.keys(props.data.Data2).length);
 
-  // const data = {
-  //   Header: ['위도', '경도', '명'],
-  //   Data: [['a', 'b', 'c'], ['a', 'b', 'c'], ['a', 'b', 'c'], ['a', 'b', 'c'], ['a', 'b', 'c'], ['a', 'b', 'c']]
-  // }
+  const data = [];
+
 
   return (
     <BottomSheet isOpen={false} >
@@ -26,8 +25,8 @@ const TemperatureTable = (props) => {
 
           <View>
             <Table borderStyle={{ borderWidth: 1, borderColor: '#ffa1d2' }}>
-              <Row data={props.data.Header} style={styles.HeadStyle} textStyle={styles.TextStyle} />
-              <Rows data={props.data.Data} textStyle={styles.TextStyle} />
+              <Row data={props.data.Header} style={styles.HeadStyle} textStyle={styles.TextStyle} flexArr={[2, 2, 1]} />
+              <Rows data={props.data.Data} textStyle={styles.TextStyle} flexArr={[2, 2, 1]} />
             </Table>
           </View>
 
