@@ -8,66 +8,87 @@
 
 import React, { useState, useEffect, Component } from 'react';
 import {
-  ScrollView,
+  TouchableOpacity,
   StyleSheet,
-  Text,
   View,
-  onScrollEndDrag,
-  Platform,
-  PermissionsAndroid,
   Image,
-
+  Dimensions,
+  Text,
 } from 'react-native';
 
-import BottomSheet from 'react-native-simple-bottom-sheet';
-// import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import Styled from 'styled-components/native';
-import Geolocation from 'react-native-geolocation-service';
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
-import TemperatureTable from './TemperatureTable';
-import DrawMap from './DrawMap';
-import data from './data.json';
-
+import Main from './Main'
 
 const App = () => {
 
   return (
-    <View style={{ flex: 1 }}>
-      <DrawMap />
-      <TemperatureTable data={data} />
+    <View style={styles.container}
+    // style={{
+    //   flex: 1,
+    //   justifyContent: 'center',
+    //   alignItems: 'center',
+    //   backgroundColor: '#EDB0B0'
+    //   // backgroundColor: '#F0F9FF'
+    // }}
+    >
+      <Image source={require("./asset/KETI_CI_1.png")} style={styles.ci_1} />
+      <Image source={require("./asset/KETI_CI_2.png")} style={styles.ci_2} />
+
+      <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={() => { Main() }}>
+        <Text style={styles.text}>Get Started</Text>
+      </TouchableOpacity>
     </View >
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f0f0f0",
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  BottomView: {
-    marginBottom: 10
-  },
-  HeadStyle: {
-    height: 50,
-    alignContent: "center",
-    backgroundColor: '#ffe0f0'
-  },
-  TextStyle: {
-    textAlign: "center",
-    backgroundColor: "#f0f0f0",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10
 
+    /* light-blue/50 */
+    // backgroundColor: "#F0F9FF"
+    backgroundColor: '#EDB0B0',
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
-  TableStyle: {
+  ci_1: {
+    position: 'absolute',
+    width: 200,
+    height: 100,
+    top: (Dimensions.get('window').height - 200) / 2
+  },
+  ci_2: {
+    position: 'absolute',
+    width: 200,
+    height: 33,
+    top: (Dimensions.get('window').height - 33) / 2
+  },
+  button: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 20
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#045D99',
+    paddingVertical: 13,
+    paddingHorizontal: 33,
+
+    position: 'absolute',
+    width: 328,
+    height: 50,
+    top: (Dimensions.get('window').height - 150)
+  },
+  text: {
+    color: 'white',
+    fontSize: 16
+
   }
+
 });
+
 
 export default App;

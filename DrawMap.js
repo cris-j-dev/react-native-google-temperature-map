@@ -44,9 +44,50 @@ const DrawMap = (props) => {
     );
   }
 
+  // console.log(props.data.Data2);
+
+  var markers = [];
+  var object_length = Object.keys(props.data.Data2).length;
+  for (let i = 0; i < object_length; i++) {
+    var image;
+    var num = props.data.Data2[i]["num"]
+    const index = props.data.Data2[i]["index"]
+    if (num == 0) {
+      image = require('./asset/icon-p00.png');
+    }
+    else if (num >= 1 && num < 5) {
+      image = require('./asset/icon-p01.png');
+    }
+    else if (num >= 5 && num < 10) {
+      image = require('./asset/icon-p02.png');
+    }
+    else if (num >= 10 && num < 50) {
+      image = require('./asset/icon-p03.png');
+    }
+    else if (num >= 50 && num < 100) {
+      image = require('./asset/icon-p04.png');
+    }
+    else if (num >= 100) {
+      image = require('./asset/icon-p05.png');
+    }
+
+    markers.push(
+      <Marker
+        key={String(index)}
+        coordinate={{ latitude: Number(props.data.Data2[i]["lat"]), longitude: Number(props.data.Data2[i]["lon"]) }}
+        image={image}
+        // title={props.data.Data2[i]["index"]}
+        title={String(num)}
+      // image={require(image)}
+      ></Marker >
+    )
+  }
+
+  console.log(markers);
+
   return (
     <View style={{ flex: 1 }}>
-      { <MapView
+      <MapView
         style={{ flex: 1 }}
         provider={PROVIDER_GOOGLE}
         initialRegion={{
@@ -57,49 +98,17 @@ const DrawMap = (props) => {
           latitudeDelta: 0.005,
           longitudeDelta: 0.005,
         }}>
-        <Marker
+        {/* <Marker
           // key={1}
-          coordinate={{ latitude: location.latitude, longitude: location.longitude }}
+          coordinate={{ latitude: 37.411151, longitude: 127.128719 }}
           image={require('./asset/icon-p00.png')}
         >
-        </Marker>
-      </MapView>}
+        </Marker> */}
+        {markers}
+      </MapView>
 
     </View >
   );
 };
-
-
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#f0f0f0",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  BottomView: {
-    marginBottom: 10
-  },
-  HeadStyle: {
-    height: 50,
-    alignContent: "center",
-    backgroundColor: '#ffe0f0'
-  },
-  TextStyle: {
-    textAlign: "center",
-    backgroundColor: "#f0f0f0",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10
-
-  },
-  TableStyle: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 20
-  }
-});
 
 export default DrawMap;
