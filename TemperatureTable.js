@@ -15,10 +15,8 @@ const TemperatureTable = (props) => {
   // const data = Object.entries(props.data.Data2).map(([key, val]) => ({
   //   [key]: val
   // }));
-  console.log("data");
   // const data = Object.values(JSON.parse(string))
   const data = props.data.Data2.map(temp => Object.values(temp));
-  console.log(data);
 
   return (
     <BottomSheet isOpen={false} >
@@ -26,7 +24,7 @@ const TemperatureTable = (props) => {
         <ScrollView onScrollEndDrag={onScrollEndDrag}>
 
           <View>
-            <Table borderStyle={{ borderWidth: 1, borderColor: '#ffa1d2' }}>
+            <Table borderStyle={{ borderWidth: 1, borderColor: '#045d99' }}>
               <Row data={props.data.Header} style={styles.HeadStyle} textStyle={styles.TextStyle} flexArr={[1, 4, 4, 1]} />
               <Rows data={data} textStyle={styles.TextStyle} flexArr={[1, 4, 4, 1]} />
             </Table>
@@ -43,7 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     alignContent: "center",
-    backgroundColor: '#ffe0f0'
+    backgroundColor: '#F0F9FF'
   },
   TextStyle: {
     textAlign: "center",

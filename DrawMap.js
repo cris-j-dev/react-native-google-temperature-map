@@ -5,6 +5,7 @@ import {
   View,
   Platform,
   PermissionsAndroid,
+  Image,
 
 } from 'react-native';
 
@@ -20,11 +21,13 @@ async function requestPermission() {
 }
 
 const DrawMap = (props) => {
+  let timestamp = + new Date();
+  // console.log(timestamp);
   const [location, setLocation] = useState();
   useEffect(() => {
     requestPermission()
       .then(result => {
-        console.log({ result });
+        // console.log({ result });
         if (result === "granted") {
           Geolocation.getCurrentPosition(
             pos => { setLocation(pos.coords); },
@@ -39,18 +42,19 @@ const DrawMap = (props) => {
   if (!location) {
     return (
       <View>
-        <Text>Splash screen</Text>
+        <Text>Loading ...</Text>
       </View>
     );
   }
 
   // console.log(props.data.Data2);
 
-  var markers = [];
-  var object_length = Object.keys(props.data.Data2).length;
+  let markers = [];
+  let object_length = Object.keys(props.data.Data2).length;
   for (let i = 0; i < object_length; i++) {
-    var image;
-    var num = props.data.Data2[i]["num"]
+    let image;
+    let num = props.data.Data2[i]["num"]
+    let title = String(props.data.Data2[i]["num"]) + "/" + String(props.data.Data2[i]["tot"])
     const index = props.data.Data2[i]["index"]
     if (num == 0) {
       image = require('./asset/icon-p00.png');
@@ -75,15 +79,19 @@ const DrawMap = (props) => {
       <Marker
         key={String(index)}
         coordinate={{ latitude: Number(props.data.Data2[i]["lat"]), longitude: Number(props.data.Data2[i]["lon"]) }}
-        image={image}
+        // image={image}
         // title={props.data.Data2[i]["index"]}
-        title={String(num)}
+        title={title}
       // image={require(image)}
-      ></Marker >
+      >
+        <Image source={image} style={{ width: 40, height: 40 }} resizeMode="contain" />
+      </Marker >
     )
   }
+  let timestamp_end = + new Date();
+  console.log(timestamp_end - timestamp);
 
-  console.log(markers);
+  // console.log(markers);
 
   return (
     <View style={{ flex: 1 }}>
