@@ -8,22 +8,34 @@ import {
   Dimensions,
   Text,
 } from 'react-native';
+import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
 
 // const Home = () => {
-class Home extends Component {
-  render() {
-    return (
-      <View style={styles.container} >
-        <Image source={require("./asset/KETI_CI_1.png")} style={styles.ci_1} />
-        <Image source={require("./asset/KETI_CI_2.png")} style={styles.ci_2} />
+// class Home extends Component {
+function Home() {
 
-        <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={() => { this.props.navigation.navigate("Main") }}>
-          <Text style={styles.text}>Get Started</Text>
-        </TouchableOpacity>
-      </View >
-    );
-  }
+  var radio_props = [
+    { label: '한국어', value: 0 },
+    { label: 'English', value: 1 }
+  ];
+  return (
+    <View style={styles.container} >
+      <Image source={require("./asset/KETI_CI_1.png")} style={styles.ci_1} />
+      <Image source={require("./asset/KETI_CI_2.png")} style={styles.ci_2} />
+
+      <RadioForm
+        radio_props={radio_props}
+        initial={0}
+        formHorizontal={true}
+        onPress={(value) => { this.setState({ value: value }) }}
+      />
+
+      <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={() => { this.props.navigation.navigate("Main") }}>
+        <Text style={styles.text}>Get Started</Text>
+      </TouchableOpacity>
+    </View >
+  );
 };
 
 const styles = StyleSheet.create({

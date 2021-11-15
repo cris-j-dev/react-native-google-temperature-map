@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import {
   View,
 } from 'react-native';
+
 import data from './data.json';
 import DrawMap from './DrawMap';
 import TemperatureTable from './TemperatureTable';
@@ -11,6 +12,7 @@ import TemperatureTable from './TemperatureTable';
 class Main extends Component {
   // const Main = () => {
   render() {
+
     return (
       <View style={{ flex: 1 }}>
         <DrawMap data={data} />
@@ -22,3 +24,4 @@ class Main extends Component {
 
 
 export default Main;
+

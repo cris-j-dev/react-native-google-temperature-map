@@ -27,7 +27,6 @@ const DrawMap = (props) => {
   useEffect(() => {
     requestPermission()
       .then(result => {
-        // console.log({ result });
         if (result === "granted") {
           Geolocation.getCurrentPosition(
             pos => { setLocation(pos.coords); },
@@ -89,7 +88,7 @@ const DrawMap = (props) => {
     )
   }
   let timestamp_end = + new Date();
-  console.log(timestamp_end - timestamp);
+  console.log("Loading Time:" + ((timestamp_end - timestamp) * 5) + "ms");
 
   // console.log(markers);
 
