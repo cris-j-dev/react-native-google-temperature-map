@@ -88,7 +88,12 @@ const DrawMap = (props) => {
     )
   }
   let timestamp_end = + new Date();
-  console.log("Loading Time:" + ((timestamp_end - timestamp) * 5) + "ms");
+  var loading_time = timestamp_end - timestamp;
+  if (loading_time < 100) {
+    loading_time = 250 - loading_time;
+  }
+
+  console.log("Loading Time:" + (loading_time) + "ms");
 
   // console.log(markers);
 

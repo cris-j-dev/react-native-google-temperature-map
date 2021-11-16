@@ -8,7 +8,7 @@ import DrawMap from './DrawMap';
 import TemperatureTable from './TemperatureTable';
 
 
-
+// function Main() {
 class Main extends Component {
   // const Main = () => {
   render() {

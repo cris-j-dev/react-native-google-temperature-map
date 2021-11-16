@@ -8,41 +8,47 @@ import {
   Dimensions,
   Text,
 } from 'react-native';
+// import { RadioButton, } from 'react-native-paper';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
+var radio_props = [
+  { label: '한국어     ', value: 0 },
+  { label: 'English', value: 1 }
+];
 
-// const Home = () => {
-// class Home extends Component {
-function Home() {
+function Home(props) {
+  const [value, setValue] = React.useState(0);
 
-  var radio_props = [
-    { label: '한국어', value: 0 },
-    { label: 'English', value: 1 }
-  ];
+  // const Home = () => {
+  // class Home extends Component {
+  // render() {
   return (
     <View style={styles.container} >
       <Image source={require("./asset/KETI_CI_1.png")} style={styles.ci_1} />
       <Image source={require("./asset/KETI_CI_2.png")} style={styles.ci_2} />
 
-      <RadioForm
+      {/* <RadioForm style={styles.radio}
         radio_props={radio_props}
         initial={0}
         formHorizontal={true}
-        onPress={(value) => { this.setState({ value: value }) }}
-      />
+        onPress={(value) => { setValue(value) }}
+      /> */}
 
-      <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={() => { this.props.navigation.navigate("Main") }}>
+      <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={() => { props.navigation.navigate("Main") }}>
         <Text style={styles.text}>Get Started</Text>
+        {/* {value === 0 && <Text style={styles.text}>시         작</Text>}
+        {value === 1 && <Text style={styles.text}>Get Started</Text>} */}
       </TouchableOpacity>
     </View >
   );
+  // }
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
 
     /* light-blue/50 */
@@ -84,8 +90,29 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16
 
-  }
+  },
+  radio: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
 
+    // position: 'absolute',
+    // width: 1000,
+    top: (Dimensions.get('window').height - 550),
+    // left: -60
+  },
+  radioBtn: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    // position: 'absolute',
+    // width: 1000,
+    top: (Dimensions.get('window').height - 550),
+    // left: -60
+  },
 });
 
 export default Home;
